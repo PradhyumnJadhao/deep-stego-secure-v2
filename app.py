@@ -470,13 +470,13 @@ for k in ["user","profile","stego_result"]:
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("""<div class="hero">
 <h1>🔐 Deep-Stego Secure</h1>
-<p class="subtitle">Military-grade neural image steganography with AES-256 encryption.<br>
-Hide secrets inside ordinary images — invisible and unbreakable.</p>
+<p class="subtitle">AI-powered image steganography with AES-256-GCM encryption.<br>
+Conceal, encrypt, and recover secret images through a secure image-sharing workflow.</p>
 <div class="badge-row">
 <div class="tech-badge"><span class="dot dot-purple"></span>Dual U-Net</div>
 <div class="tech-badge"><span class="dot dot-blue"></span>AES-256-GCM</div>
-<div class="tech-badge"><span class="dot dot-green"></span>128×128 HD</div>
-<div class="tech-badge"><span class="dot dot-amber"></span>SSIM &gt;0.92</div>
+<div class="tech-badge"><span class="dot dot-green"></span>Image Steganography</div>
+<div class="tech-badge"><span class="dot dot-amber"></span>PSNR/SSIM Metrics</div>
 </div></div>""", unsafe_allow_html=True)
 
 with st.spinner("Loading AI model..."):
