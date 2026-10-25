@@ -1,3 +1,4 @@
+
 <div align="center">
 
 # 🔐 Deep-Stego Secure V2
@@ -85,7 +86,7 @@ The application uses a **paired hiding/reveal network design** implemented with 
 |---|---|
 | `HidingNet` | Takes the cover and secret images as input and produces a stego image. |
 | `RevealNet` | Takes the stego image and predicts the hidden secret image. |
-| Preprocessing | Converts images to RGB, resizes to the app's configured input dimensions, and converts them to tensors. |
+| Preprocessing | Converts images to RGB, resizes them to the app's configured input dimensions, and converts them to tensors. |
 | Postprocessing | Converts model outputs back into displayable images. |
 | Checkpoints | Store the trained parameters used by the application at inference time. |
 
@@ -301,12 +302,11 @@ Before publishing a new version, verify:
 
 The repository also includes model development and evaluation utilities in the project workspace, such as `stego_models.py`, `train_stego.py`, `evaluate.py`, and `test_regression.py`. Consult `UPGRADE_GUIDE.md` before using those utilities to train or replace deployed checkpoints. Training settings, architectures, and checkpoints must match.
 
+## 🧭 Technical Deep Dive & Project Guide
 
-## 🎓 Interview revision guide
+This section brings together the system overview, architecture, core concepts, evaluation notes, and common technical questions in one place.
 
-This section is intentionally written as a quick revision sheet. Start with the 30-second explanation, then learn the data flow, design choices, metrics, and limitations.
-
-### 30-second project explanation
+### Project overview in 30 seconds
 
 > **Deep-Stego Secure V2 is a web application for sharing a secret image by hiding it inside a cover image.** A PyTorch HidingNet takes the cover and secret images and creates a stego image that should look similar to the cover. The app serializes that image as PNG and encrypts the PNG bytes using AES-256-GCM with a key derived from a user passphrase through PBKDF2-HMAC-SHA256. Streamlit provides the interface, Supabase supports account and message/storage workflows, and the paired RevealNet reconstructs the hidden image after the payload is retrieved and decrypted. The deployed app processes images at 512 × 512 pixels, while large model checkpoints are hosted separately on Hugging Face.
 
@@ -370,7 +370,7 @@ Neither replaces the other. A stego image may be discovered by steganalysis; enc
 - The salt and nonce are stored with the encrypted payload because they are required for decryption; they do not need to be secret.
 - If the passphrase is wrong or the ciphertext has been modified, authenticated decryption should fail rather than return trusted plaintext.
 
-**Interview caution:** Say “AES-256-GCM authenticated encryption,” not “unbreakable encryption.” Real security also depends on passphrase strength, nonce handling, secret storage, access policies, and implementation.
+**Security note:** Say “AES-256-GCM authenticated encryption,” not “unbreakable encryption.” Real security also depends on passphrase strength, nonce handling, secret storage, access policies, and implementation.
 
 ### Why keep the model checkpoints on Hugging Face?
 
@@ -414,7 +414,7 @@ Supabase supports the cloud-backed user and messaging workflow. In this app:
 
 The exact protection of user data depends on Supabase Auth configuration, Storage policies, and Row Level Security. Do not claim that access is secure merely because Supabase is used; policies must be configured correctly.
 
-### Likely interview questions and concise answers
+### Common technical questions and concise answers
 
 **1. What problem does the project solve?**  
 It demonstrates a workflow for concealing a secret image inside a visually similar carrier image and protecting the resulting stego-image file with authenticated encryption before sharing.
@@ -481,9 +481,9 @@ Run a reproducible held-out evaluation over many image pairs, report mean and va
 - Do not claim Supabase policies are secure without checking the actual project configuration.
 - Do not share secrets, passphrases, service-role keys, or `.streamlit/secrets.toml` in the repository.
 
-## 🧠 Five-minute pre-interview revision
+## 🧠 Quick project recap
 
-If you have only five minutes, remember these six statements:
+For a quick refresher, keep these six points in mind:
 
 1. **Goal:** hide a secret image inside a cover image and reconstruct it later.
 2. **Neural path:** `HidingNet(cover, secret) → stego`; `RevealNet(stego) → recovered secret`.
@@ -513,9 +513,6 @@ These are possible improvements, not features claimed to be implemented already.
 - Application source: [deep-stego-secure-v2](https://github.com/PradhyumnJadhao/deep-stego-secure-v2)
 - Model weights: [deep-stego-secure-v2-models](https://huggingface.co/PradhyumnJ/deep-stego-secure-v2-models)
 
-## 📄 License
-
-No license is specified here. Add a `LICENSE` file before presenting this repository as open source, and ensure the code, model weights, and any training datasets can legally be redistributed under the chosen terms.
 
 ---
 
