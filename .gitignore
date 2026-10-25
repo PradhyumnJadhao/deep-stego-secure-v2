@@ -1,0 +1,5 @@
+.streamlit/
+*.pth
+*.tar.gz
+__pycache__/
+app_before_hf_download.py

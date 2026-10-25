@@ -1,0 +1,8 @@
+streamlit
+torch
+numpy
+Pillow
+supabase
+cryptography
+scikit-image
+huggingface_hub
